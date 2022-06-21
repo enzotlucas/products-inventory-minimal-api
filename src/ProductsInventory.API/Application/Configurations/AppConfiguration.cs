@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http.Json;
+﻿using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -41,24 +43,21 @@ namespace ProductsInventory.API.Application.Configurations
               i.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                             options => options.EnableRetryOnFailure(6)));
 
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsDefaultPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             builder.Services.Configure<JsonOptions>(options =>
             {
                 options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            });
-
-            builder.Host.UseSerilog((context, configuration) =>
-            {
-                configuration
-                .WriteTo.Console()
-                .WriteTo.MSSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
-                        sinkOptions: new MSSqlServerSinkOptions()
-                        {
-                            AutoCreateSqlTable = true,
-                            TableName = "LogAPI"
-                        });
             });
         }
     }
