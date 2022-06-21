@@ -9,7 +9,11 @@ namespace ProductsInventory.API.Application.Configurations
         [AllowAnonymous]
         public void DefineActions(WebApplication app)
         {
-            app.UseExceptionHandler("/error"); 
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseExceptionHandler("/error");
 
             app.Map("/error", (HttpContext http) =>
             {
@@ -40,8 +44,8 @@ namespace ProductsInventory.API.Application.Configurations
             builder.Services.Configure<JsonOptions>(options =>
             {
                 options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
             builder.Host.UseSerilog((context, configuration) =>

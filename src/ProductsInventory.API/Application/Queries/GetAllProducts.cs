@@ -8,9 +8,8 @@ namespace ProductsInventory.API.Application.Queries
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 
-        //[Authorize(Policy = "CanReadProducts")]
         [Authorize]
-        //[ClaimsAuthorize("Products","Read")]
+        [ClaimsAuthorize("Products", "Read")]
         public static async Task<IResult> Action(IProductsRepository repository, HttpContext context, ILogger<GetAllProducts> logger, int page, int rows)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;

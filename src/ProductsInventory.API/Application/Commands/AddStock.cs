@@ -8,7 +8,8 @@ namespace ProductsInventory.API.Application.Commands
         public static string[] Methods => new string[] { HttpMethod.Put.ToString() };
         public static Delegate Handle => Action;
 
-        [Authorize(Policy = "CanUpdateProduct")]
+        [Authorize]
+        [ClaimsAuthorize("Products", "Update")]
         public static async Task<IResult> Action(IProductsRepository repository, HttpContext context, ILogger<AddStock> logger, Guid id, int quantity)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;

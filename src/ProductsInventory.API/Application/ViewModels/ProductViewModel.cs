@@ -1,7 +1,12 @@
-﻿namespace ProductsInventory.API.Application.ViewModels
+﻿using System.Text.Json.Serialization;
+
+namespace ProductsInventory.API.Application.ViewModels
 {
     public class ProductViewModel
     {
+        [JsonConstructor]
+        public ProductViewModel() { }
+
         public Guid? Id { get; set; }
         public string Name { get; set; }
         public int? Quantity { get; set; }

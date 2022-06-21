@@ -45,7 +45,7 @@ namespace ProductsInventory.API.Application.Endpoints
                 return Results.BadRequest(claimsCreated.Errors.First());
             }
 
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             var subject = new ClaimsIdentity(new Claim[]
             {
@@ -105,22 +105,25 @@ namespace ProductsInventory.API.Application.Endpoints
         }
 
         [AllowAnonymous]
-        internal async Task<IResult> LoginAsync(ILogger<SecurityEndpointsConfiguration> logger, UserManager<IdentityUser> userManager, LoginViewModel dto)
+        internal async Task<IResult> LoginAsync(ILogger<SecurityEndpointsConfiguration> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, LoginViewModel dto)
         {
             if (dto is null)
                 return logger.BadRequestWithLog("Invalid credentials", $", username: {dto.Username}");
 
+            //if (user is null || !await userManager.CheckPasswordAsync(user, dto.Password))
+            //    return logger.BadRequestWithLog("Invalid credentials", $", e-mail: {dto.Username}");
+
+            var signIn = await signinManager.PasswordSignInAsync(dto.Username, dto.Password, false, false);
+
             var user = await userManager.FindByEmailAsync(dto.Username);
 
-            if (user is null)
-                return logger.BadRequestWithLog("Invalid credentials", $", e-mail: {dto.Username}");
-
-            if (!await userManager.CheckPasswordAsync(user, dto.Password))
+            if (!signIn.Succeeded)
                 return logger.BadRequestWithLog("Invalid credentials", $", e-mail: {dto.Username}");
 
             var claims = await userManager.GetClaimsAsync(user);
             var userRoles = await userManager.GetRolesAsync(user);
 
+            claims.Add(new Claim(JwtRegisteredClaimNames.UniqueName, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
@@ -134,14 +137,14 @@ namespace ProductsInventory.API.Application.Endpoints
 
             identityClaims.AddClaims(claims);
 
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = identityClaims,
                 SigningCredentials =
                     new SigningCredentials(
-                        new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                        new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
                 Audience = _configuration["Jwt:Audience"],
                 Issuer = _configuration["Jwt:Issuer"],
                 Expires = DateTime.UtcNow.AddSeconds(300)

@@ -14,7 +14,7 @@ namespace ProductsInventory.API.Application.Commands
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            logger.LogInformation(string.Format("User {0} requested {Route} with payload: {1}", userId, dto.ToString()));
+            logger.LogInformation(string.Format("User {0} requested {1} with payload: {2}", userId, Route, dto.ToString()));
 
             var product = dto.ToEntity();
 
