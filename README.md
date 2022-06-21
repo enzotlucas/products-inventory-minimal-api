@@ -14,7 +14,8 @@ Update-Database -Context IdentityContext
 
 ## Dependency injections
 
-The project have a interface called IDefinition, where every class that is derived from it is mapping endpoints or services for the app.
+The project have an interface called IDefinition, where every class that is derived from it is mapping endpoints or services for the app.
+Those endpoints and services are captured by ApplicationConfigurationsExtensions.cs using the assembly, then mapped for the application.
 The class ApplicationConfigurationsExtensions.cs provides the methods that are used in the Program.cs, as the examples shows:
 
 **ApplicationConfigurationsExtensions.cs**:
@@ -65,7 +66,7 @@ app.UseApplicationConfigurations();
 app.Run();
 ```
 
-The interface basicly defines two methods:
+The interface basically defines two methods:
 
 ```cs
 namespace ProductsInventory.API.Core.DomainObjects
