@@ -97,6 +97,10 @@ namespace ProductsInventory.API.Application.Endpoints
                     claimList.Add(new Claim("Products", "Update"));
                     claimList.Add(new Claim("Products", "Delete"));
                     break;
+                case UserType.SELLER:
+                    claimList.Add(new Claim("Products", "Read"));
+                    claimList.Add(new Claim("Products", "Update"));
+                    break;
                 default:
                     break;
             }
@@ -130,9 +134,9 @@ namespace ProductsInventory.API.Application.Endpoints
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
 
-            foreach (var userRole in userRoles)            
+            foreach (var userRole in userRoles)
                 claims.Add(new Claim("role", userRole));
-            
+
             var identityClaims = new ClaimsIdentity();
 
             identityClaims.AddClaims(claims);
