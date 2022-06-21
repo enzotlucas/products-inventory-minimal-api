@@ -1,10 +1,4 @@
-﻿using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace ProductsInventory.API.Application.Configurations
+﻿namespace ProductsInventory.API.Application.Configurations
 {
     public class AppConfiguration : IDefinition
     {

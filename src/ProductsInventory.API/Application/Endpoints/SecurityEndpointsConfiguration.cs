@@ -1,7 +1,3 @@
-using ProductsInventory.API.Core.ValueObjects;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
 namespace ProductsInventory.API.Application.Endpoints
 {
     public class SecurityEndpointsConfiguration : IDefinition

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System.Security.Claims;
-
-namespace ProductsInventory.API.Application.Extensions
+﻿namespace ProductsInventory.API.Application.Extensions
 {
     public class ClaimsAuthorizeAttribute : TypeFilterAttribute
     {

@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace ProductsInventory.API.Application.ViewModels
+﻿namespace ProductsInventory.API.Application.ViewModels
 {
     public class ProductViewModel
     {

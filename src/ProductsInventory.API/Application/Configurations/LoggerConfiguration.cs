@@ -1,7 +1,4 @@
-﻿using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
-namespace ProductsInventory.API.Application.Configurations
+﻿namespace ProductsInventory.API.Application.Configurations
 {
     public class LoggerConfiguration : IDefinition
     {

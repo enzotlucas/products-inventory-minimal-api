@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace ProductsInventory.API.Application.Queries
+﻿namespace ProductsInventory.API.Application.Queries
 {
     public class GetProductById
     {

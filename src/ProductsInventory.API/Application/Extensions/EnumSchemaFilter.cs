@@ -1,7 +1,4 @@
-﻿using Microsoft.OpenApi.Any;
-using Swashbuckle.AspNetCore.SwaggerGen;
-
-namespace ProductsInventory.API.Application.Extensions
+﻿namespace ProductsInventory.API.Application.Extensions
 {
     public class EnumSchemaFilter : ISchemaFilter
     {

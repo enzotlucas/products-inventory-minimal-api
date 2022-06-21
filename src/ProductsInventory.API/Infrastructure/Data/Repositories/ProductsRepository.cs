@@ -38,7 +38,6 @@ namespace ProductsInventory.API.Infrastructure.Data.Repositories
                    rows
                }
             );
-
         }
 
         public async Task<Product> GetByIdAsync(Guid id)

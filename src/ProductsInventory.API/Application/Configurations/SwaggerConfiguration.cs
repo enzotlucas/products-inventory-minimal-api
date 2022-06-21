@@ -1,6 +1,3 @@
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Text.Json;
-
 namespace ProductsInventory.API.Application.Configurations
 {
     public class SwaggerConfiguration : IDefinition

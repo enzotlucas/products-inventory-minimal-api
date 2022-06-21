@@ -21,22 +21,37 @@
 		<Using Include="ProductsInventory.API.Core.Entities" />
 		<Using Include="ProductsInventory.API.Core.Exceptions" />
 		<Using Include="ProductsInventory.API.Core.Repositories" />
+		<Using Include="ProductsInventory.API.Core.ValueObjects" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data.Repositories" />
 		<Using Include="ProductsInventory.API.Infrastructure.Identity" />
 
+		<Using Include="Dapper" />
+		<Using Include="HealthChecks.UI.Client" />
 		<Using Include="Microsoft.AspNetCore.Authorization" />
 		<Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 		<Using Include="Microsoft.AspNetCore.Diagnostics" />
+		<Using Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" />
+		<Using Include="Microsoft.AspNetCore.Http.Json" />
 		<Using Include="Microsoft.AspNetCore.Identity" />
 		<Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="Microsoft.AspNetCore.Mvc.Filters" />
+		<Using Include="Microsoft.Data.SqlClient" />
 		<Using Include="Microsoft.EntityFrameworkCore" />
 		<Using Include="Microsoft.IdentityModel.Tokens" />
+		<Using Include="Microsoft.OpenApi.Any" />
 		<Using Include="Microsoft.OpenApi.Models" />
 		<Using Include="Serilog" />
 		<Using Include="Serilog.Sinks.MSSqlServer" />
+		<Using Include="Swashbuckle.AspNetCore.SwaggerGen" />
+		<Using Include="System.IdentityModel.Tokens.Jwt" />
 		<Using Include="System.Runtime.Serialization" />
+		<Using Include="System.Security.Claims" />
 		<Using Include="System.Text" />
+		<Using Include="System.Text.Json" />
+		<Using Include="System.Text.Json.Serialization" />
+		
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.4" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />

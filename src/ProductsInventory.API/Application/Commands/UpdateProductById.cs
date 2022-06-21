@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace ProductsInventory.API.Application.Commands
+﻿namespace ProductsInventory.API.Application.Commands
 {
     public class UpdateProductById
     {
