@@ -230,6 +230,11 @@ namespace ProductsInventory.API.Application.Commands
 }
 ```
 
+## Security
+```
+<under development>
+```
+
 ## Logging
 ```
 <under development>
