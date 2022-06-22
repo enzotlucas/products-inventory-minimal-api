@@ -1,4 +1,4 @@
-# products-inventory-minimal-api
+# Products Inventoy Minimal API (.net 6)
 A CRUD API using Minimal API
 
 ## Preparing the environment:
