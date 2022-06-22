@@ -5,6 +5,8 @@ A CRUD API using Minimal API
 
 ```bash
 # PowerShell:
+Install-Package Microsoft.EntityFrameworkCore
+
 Add-Migration InitialDatabase -Context ProductsContext -o "Infrastructure/Data/Migrations"
 Add-Migration InitialIdentity -Context IdentityContext -o "Infrastructure/Identity/Migrations"
 
