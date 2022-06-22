@@ -11,6 +11,8 @@
 
             app.UseExceptionHandler("/error");
 
+            app.UseCors("CorsDefaultPolicy");
+
             app.Map("/error", (HttpContext http) =>
             {
                 var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
@@ -47,7 +49,7 @@
                 });
             });
 
-            builder.Services.Configure<JsonOptions>(options =>
+            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
             {
                 options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

@@ -6,13 +6,13 @@ namespace ProductsInventory.API.Application.Endpoints
 
         public void DefineActions(WebApplication app)
         {
-            app.MapPost("/account/", CreateAccountAsync)
+            app.MapPost("/api/account/", CreateAccountAsync)
                .WithTags("Account")
                .ProducesValidationProblem()
                .Produces<AccessTokenViewModel>(StatusCodes.Status200OK)
                .Produces(StatusCodes.Status400BadRequest);
 
-            app.MapPost("/account/login", LoginAsync)
+            app.MapPost("/api/account/login", LoginAsync)
                .WithTags("Account")
                .ProducesValidationProblem()
                .Produces<AccessTokenViewModel>(StatusCodes.Status200OK)

@@ -2,7 +2,7 @@
 {
     public class GetAllProducts
     {
-        public static string Route => "/products";
+        public static string Route => "/api/products";
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 

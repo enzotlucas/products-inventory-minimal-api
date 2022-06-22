@@ -2,7 +2,7 @@
 {
     public class AddStock
     {
-        public static string Route => "/products/{id:guid}/addStock";
+        public static string Route => "/api/products/{id:guid}/addStock";
         public static string[] Methods => new string[] { HttpMethod.Put.ToString() };
         public static Delegate Handle => Action;
 

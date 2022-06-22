@@ -2,7 +2,7 @@
 {
     public class WithdrawFromStock
     {
-        public static string Route => "/products/{id:guid}/withdrawStock";
+        public static string Route => "/api/products/{id:guid}/withdrawStock";
         public static string[] Methods => new string[] { HttpMethod.Put.ToString() };
         public static Delegate Handle => Action;
 
