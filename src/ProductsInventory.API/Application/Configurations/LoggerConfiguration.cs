@@ -6,10 +6,11 @@
         {
             app.MapHealthChecks("/health", new HealthCheckOptions
             {
+                Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
-            app.MapHealthChecksUI();
+            app.MapHealthChecksUI(options => { options.UIPath = "/health-ui"; });
         }
 
         public void DefineServices(WebApplicationBuilder builder)

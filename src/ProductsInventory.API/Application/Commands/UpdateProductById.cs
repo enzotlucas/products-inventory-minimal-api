@@ -2,7 +2,7 @@
 {
     public class UpdateProductById
     {
-        public static string Route => "/products/{id:guid}";
+        public static string Route => "/api/products/{id:guid}";
         public static string[] Methods => new string[] { HttpMethod.Put.ToString() };
         public static Delegate Handle => Action;
 

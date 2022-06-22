@@ -11,7 +11,13 @@
 
             app.UseExceptionHandler("/error");
 
+<<<<<<< HEAD
             app.Map("/error", (HttpContext http, ILogger<AppConfiguration> logger) =>
+=======
+            app.UseCors("CorsDefaultPolicy");
+
+            app.Map("/error", (HttpContext http) =>
+>>>>>>> d29d49d2024e1e07ecbd29ded6e3c5205b6fa218
             {
                 var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
 
