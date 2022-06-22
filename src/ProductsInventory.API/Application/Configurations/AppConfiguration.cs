@@ -9,32 +9,21 @@
 
             app.UseRouting();
 
-            app.UseExceptionHandler("/error");
-
-<<<<<<< HEAD
-            app.Map("/error", (HttpContext http, ILogger<AppConfiguration> logger) =>
-=======
             app.UseCors("CorsDefaultPolicy");
 
-            app.Map("/error", (HttpContext http) =>
->>>>>>> d29d49d2024e1e07ecbd29ded6e3c5205b6fa218
+            app.UseExceptionHandler("/error");
+
+            app.Map("/error", (HttpContext http, ILogger<AppConfiguration> logger) =>
             {
                 var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
 
                 if (error is null)
-                {
-                    logger.LogCritical("An error ocurred");
-                    return Results.Problem("An error ocurred", statusCode: 500);
-                }
+                    return logger.ProblemWithLog($"An error ocurred", critical: true);
 
                 if (error is BusinessException)
-                {
-                    logger.LogWarning(error.Message);
-                    return Results.BadRequest(error.Message);
-                }
+                    return logger.BadRequestWithLog(error.Message);
 
-                logger.LogError($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}");
-                return Results.Problem($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}", statusCode: 500);
+                return logger.ProblemWithLog($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}");
             });
         }
 
@@ -49,6 +38,8 @@
             builder.Services.AddDbContext<ProductsContext>(i =>
               i.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                             options => options.EnableRetryOnFailure(6)));
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddCors(opt =>
             {

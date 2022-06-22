@@ -15,6 +15,24 @@ namespace ProductsInventory.API.Application.Configurations
 
             builder.Services.AddSwaggerGen(options =>
             {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = builder.Configuration["Swagger:Title"],
+                    Description = builder.Configuration["Swagger:Description"],
+                    TermsOfService = new Uri(builder.Configuration["Swagger:TermsOfService"]),
+                    Contact = new OpenApiContact
+                    {
+                        Name = builder.Configuration["Swagger:Contact:Name"],
+                        Url = new Uri(builder.Configuration["Swagger:Contact:Url"])
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = builder.Configuration["Swagger:License:Name"],
+                        Url = new Uri(builder.Configuration["Swagger:License:Url"])
+                    }
+                });
+
                 options.CustomSchemaIds(SchemaIdStrategy);
 
                 options.DescribeAllParametersInCamelCase();
@@ -53,6 +71,8 @@ namespace ProductsInventory.API.Application.Configurations
             string returnedValue = currentClass.Name;
             if (returnedValue.EndsWith("ViewModel"))
                 returnedValue = returnedValue.Replace("ViewModel", string.Empty);
+            if(returnedValue.EndsWith("Response"))
+                returnedValue = returnedValue.Replace("Response", string.Empty);
             return returnedValue;
         }
     }
