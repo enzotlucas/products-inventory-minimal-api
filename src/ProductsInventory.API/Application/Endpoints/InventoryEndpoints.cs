@@ -1,13 +1,13 @@
 ﻿namespace ProductsInventory.API.Application.Endpoints
 {
-    public class InventoryEndpointsConfiguration : IDefinition
+    public class InventoryEndpoints : IDefinition
     {
         public void DefineActions(WebApplication app)
         {
             app.MapMethods(CreateProduct.Route, CreateProduct.Methods, CreateProduct.Handle)
                .WithTags("Products")
                .ProducesValidationProblem()
-               .Produces<ProductViewModel>(StatusCodes.Status200OK)
+               .Produces<ProductResponse>(StatusCodes.Status200OK)
                .Produces(StatusCodes.Status400BadRequest);
 
             app.MapMethods(DeleteProcuctById.Route, DeleteProcuctById.Methods, DeleteProcuctById.Handle)

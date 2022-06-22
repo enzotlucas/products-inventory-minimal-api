@@ -8,20 +8,24 @@
 
         [Authorize]
         [ClaimsAuthorize("Products", "Create")]
-        public static async Task<IResult> Action(HttpContext context, IProductsRepository repository, ILogger<CreateProduct> logger, ProductViewModel dto)
+        public static async Task<IResult> Action(HttpContext context, 
+                                                 IProductsRepository repository, 
+                                                 ILogger<CreateProduct> logger, 
+                                                 IMapper mapper,
+                                                 ProductRequest dto)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            logger.LogInformation(string.Format("User {0} requested {1} with payload: {2}", userId, Route, dto.ToString()));
+            logger.LogInformation($"User {userId} requested {Route} with payload: {dto}");
 
-            var product = dto.ToEntity();
+            var product = mapper.Map<Product>(dto);
 
             await repository.CreateAsync(product);
 
             if (!await repository.UnitOfWork.Commit())
                 return logger.ProblemWithLog("Error on creating the product", $", userId: {userId}, payload: {dto}");
 
-            return logger.OkWithLog($"Product created by {userId}, product id: {product.Id}", new ProductViewModel(product));
+            return logger.OkWithLog($"Product created by {userId}, product id: {product.Id}", mapper.Map<ProductResponse>(product));
         }
     }
 }

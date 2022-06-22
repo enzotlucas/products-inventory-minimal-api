@@ -8,7 +8,10 @@
 
         [Authorize]
         [ClaimsAuthorize("Products", "Delete")]
-        public static async Task<IResult> Action(HttpContext context, IProductsRepository repository, ILogger<DeleteProcuctById> logger, Guid id)
+        public static async Task<IResult> Action(HttpContext context, 
+                                                 IProductsRepository repository, 
+                                                 ILogger<DeleteProcuctById> logger, 
+                                                 Guid id)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 

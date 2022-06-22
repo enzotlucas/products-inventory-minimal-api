@@ -71,7 +71,7 @@
             Quantity += quantity;
         }
 
-        public void Update(ProductViewModel dto)
+        public void Update(ProductRequest dto)
         {
             UpdateName(dto.Name);
 

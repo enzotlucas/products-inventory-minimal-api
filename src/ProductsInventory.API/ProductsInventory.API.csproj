@@ -16,7 +16,7 @@
 		<Using Include="ProductsInventory.API.Application.Endpoints" />
 		<Using Include="ProductsInventory.API.Application.Extensions" />
 		<Using Include="ProductsInventory.API.Application.Queries" />
-		<Using Include="ProductsInventory.API.Application.ViewModels" />
+		<Using Include="ProductsInventory.API.Application.Contracts" />
 		<Using Include="ProductsInventory.API.Core.DomainObjects" />
 		<Using Include="ProductsInventory.API.Core.Entities" />
 		<Using Include="ProductsInventory.API.Core.Exceptions" />
@@ -26,6 +26,7 @@
 		<Using Include="ProductsInventory.API.Infrastructure.Data.Repositories" />
 		<Using Include="ProductsInventory.API.Infrastructure.Identity" />
 
+		<Using Include="AutoMapper" />
 		<Using Include="Dapper" />
 		<Using Include="HealthChecks.UI.Client" />
 		<Using Include="Microsoft.AspNetCore.Authorization" />

@@ -8,7 +8,11 @@
 
         [Authorize]
         [ClaimsAuthorize("Products", "Update")]
-        public static async Task<IResult> Action(IProductsRepository repository, HttpContext context, ILogger<WithdrawFromStock> logger, Guid id, int quantity)
+        public static async Task<IResult> Action(IProductsRepository repository, 
+                                                 HttpContext context, 
+                                                 ILogger<WithdrawFromStock> logger, 
+                                                 Guid id, 
+                                                 int quantity)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 

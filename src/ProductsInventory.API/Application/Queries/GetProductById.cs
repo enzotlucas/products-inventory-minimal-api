@@ -8,7 +8,10 @@
 
         [Authorize]
         [ClaimsAuthorize("Products", "Read")]
-        public static async Task<IResult> Action(HttpContext context, IProductsRepository repository, ILogger<GetProductById> logger, Guid id)
+        public static async Task<IResult> Action(HttpContext context, IProductsRepository repository, 
+                                                 ILogger<GetProductById> logger, 
+                                                 IMapper mapper,
+                                                 Guid id)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -17,7 +20,7 @@
             var product = await repository.GetByIdAsync(id);
 
             return product.Valid() ?
-                logger.OkWithLog($"Product {id} was received by {userId}", product) :
+                logger.OkWithLog($"Product {id} was received by {userId}", mapper.Map<ProductResponse>(product)) :
                 logger.NotFoundWithLog("Product not found", $", productId: {id}, userId: {userId}");
         }
     }

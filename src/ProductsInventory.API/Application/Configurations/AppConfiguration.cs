@@ -11,16 +11,23 @@
 
             app.UseExceptionHandler("/error");
 
-            app.Map("/error", (HttpContext http) =>
+            app.Map("/error", (HttpContext http, ILogger<AppConfiguration> logger) =>
             {
                 var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
 
                 if (error is null)
+                {
+                    logger.LogCritical("An error ocurred");
                     return Results.Problem("An error ocurred", statusCode: 500);
+                }
 
                 if (error is BusinessException)
+                {
+                    logger.LogWarning(error.Message);
                     return Results.BadRequest(error.Message);
+                }
 
+                logger.LogError($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}");
                 return Results.Problem($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}", statusCode: 500);
             });
         }
@@ -47,7 +54,7 @@
                 });
             });
 
-            builder.Services.Configure<JsonOptions>(options =>
+            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
             {
                 options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

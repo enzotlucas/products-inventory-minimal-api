@@ -1,6 +1,6 @@
 namespace ProductsInventory.API.Application.Endpoints
 {
-    public class SecurityEndpointsConfiguration : IDefinition
+    public class SecurityEndpoints : IDefinition
     {
         private ConfigurationManager _configuration;
 
@@ -20,7 +20,7 @@ namespace ProductsInventory.API.Application.Endpoints
         }
 
         [AllowAnonymous]
-        internal async Task<IResult> CreateAccountAsync(ILogger<SecurityEndpointsConfiguration> logger, HttpContext context, UserManager<IdentityUser> userManager, UserViewModel dto)
+        internal async Task<IResult> CreateAccountAsync(ILogger<SecurityEndpoints> logger, HttpContext context, UserManager<IdentityUser> userManager, UserViewModel dto)
         {
             if (dto is null)
                 return logger.BadRequestWithLog("Invalid credentials", $", username: {dto.Email}");
@@ -105,7 +105,7 @@ namespace ProductsInventory.API.Application.Endpoints
         }
 
         [AllowAnonymous]
-        internal async Task<IResult> LoginAsync(ILogger<SecurityEndpointsConfiguration> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, LoginViewModel dto)
+        internal async Task<IResult> LoginAsync(ILogger<SecurityEndpoints> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, LoginViewModel dto)
         {
             if (dto is null)
                 return logger.BadRequestWithLog("Invalid credentials", $", username: {dto.Username}");
