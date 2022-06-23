@@ -1,4 +1,7 @@
 # Products Inventoy Minimal API (.net 6)
+```
+<under development>
+```
 A CRUD API using Minimal API
 
 ## Preparing the environment:
