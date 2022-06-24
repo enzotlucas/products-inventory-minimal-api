@@ -4,6 +4,8 @@ namespace ProductsInventory.API.Application.Configurations
 {
     public class AppConfiguration : IDefinition
     {
+        public int OrderPriority => 0;
+
         [AllowAnonymous]
         public void DefineActions(WebApplication app)
         {
@@ -31,11 +33,6 @@ namespace ProductsInventory.API.Application.Configurations
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
-            builder.Services.AddExceptionHandler(options =>
-            {
-                options.ExceptionHandlingPath = "/error";
-            });
 
             builder.Services.AddCors(opt =>
             {

@@ -4,6 +4,8 @@ namespace ProductsInventory.API.Application.Endpoints
     {
         private ConfigurationManager _configuration;
 
+        public int OrderPriority => 4;
+
         public void DefineActions(WebApplication app)
         {
             app.MapPost("/api/account/", CreateAccountAsync)

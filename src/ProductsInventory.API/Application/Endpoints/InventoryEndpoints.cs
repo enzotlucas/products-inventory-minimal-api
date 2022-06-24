@@ -2,6 +2,8 @@
 {
     public class InventoryEndpoints : IDefinition
     {
+        public int OrderPriority => 5;
+
         public void DefineActions(WebApplication app)
         {
             app.MapMethods(CreateProduct.Route, CreateProduct.Methods, CreateProduct.Handle)

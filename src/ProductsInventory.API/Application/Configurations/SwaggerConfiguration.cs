@@ -2,6 +2,8 @@ namespace ProductsInventory.API.Application.Configurations
 {
     public class SwaggerConfiguration : IDefinition
     {
+        public int OrderPriority => 3;
+
         public void DefineActions(WebApplication app)
         {
             app.UseSwagger();

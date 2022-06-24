@@ -2,8 +2,12 @@
 {
     public class LoggerConfiguration : IDefinition
     {
+        public int OrderPriority => 1;
+
         public void DefineActions(WebApplication app)
         {
+            app.UseLoggingMiddleware();
+
             app.MapHealthChecks("/health", new HealthCheckOptions
             {
                 Predicate = _ => true,

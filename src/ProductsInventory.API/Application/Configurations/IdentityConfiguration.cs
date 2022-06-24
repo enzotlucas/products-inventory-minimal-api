@@ -2,6 +2,8 @@
 {
     public class IdentityConfiguration : IDefinition
     {
+        public int OrderPriority => 2;
+
         public void DefineActions(WebApplication app)
         {
             app.UseAuthentication();

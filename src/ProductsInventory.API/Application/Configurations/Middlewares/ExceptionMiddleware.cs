@@ -14,23 +14,23 @@ namespace ProductsInventory.API.Application.Configurations.Middlewares
             _logger = logger;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(httpContext);
+                await _next(context);
             }
             catch (BusinessException ex)
             {
                 _logger.LogWarning(ex.Message, ex.ValidationErrors);
 
-                await HandleExceptionAsync(httpContext, ex).ConfigureAwait(false);
+                await HandleExceptionAsync(context, ex).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"An error ocurred, exception: {ex}", ex);
 
-                await HandleExceptionAsync(httpContext, ex).ConfigureAwait(false);
+                await HandleExceptionAsync(context, ex).ConfigureAwait(false);
             }
         }
 
