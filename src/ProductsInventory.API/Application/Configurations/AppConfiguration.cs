@@ -1,4 +1,6 @@
-﻿namespace ProductsInventory.API.Application.Configurations
+﻿using FluentValidation;
+
+namespace ProductsInventory.API.Application.Configurations
 {
     public class AppConfiguration : IDefinition
     {
@@ -11,20 +13,7 @@
 
             app.UseCors("CorsDefaultPolicy");
 
-            app.UseExceptionHandler("/error");
-
-            app.Map("/error", (HttpContext http, ILogger<AppConfiguration> logger) =>
-            {
-                var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
-
-                if (error is null)
-                    return logger.ProblemWithLog($"An error ocurred", critical: true);
-
-                if (error is BusinessException)
-                    return logger.BadRequestWithLog(error.Message);
-
-                return logger.ProblemWithLog($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}");
-            });
+            app.UseExceptionMiddleware();
         }
 
         public void DefineServices(WebApplicationBuilder builder)
@@ -40,6 +29,13 @@
                             options => options.EnableRetryOnFailure(6)));
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+            builder.Services.AddExceptionHandler(options =>
+            {
+                options.ExceptionHandlingPath = "/error";
+            });
 
             builder.Services.AddCors(opt =>
             {

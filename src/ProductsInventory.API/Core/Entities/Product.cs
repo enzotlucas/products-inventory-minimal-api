@@ -1,4 +1,6 @@
-﻿namespace ProductsInventory.API.Core.Entities
+﻿using ProductsInventory.API.Core.Validations;
+
+namespace ProductsInventory.API.Core.Entities
 {
     public class Product
     {
@@ -41,12 +43,12 @@
 
         private void Validate()
         {
-            if (string.IsNullOrWhiteSpace(Name) ||
-               Quantity < 0 ||
-               Price < 0 ||
-               Price < Cost ||
-               Cost < 0)
-                throw new InvalidProductException();
+            var validator = new ProductValidator().Validate(this);
+
+            if (validator.IsValid)
+                return;
+
+            throw new InvalidProductException(validator.ToDictionary());
         }
 
         public void Enable()

@@ -1,4 +1,7 @@
-﻿namespace ProductsInventory.API.Application.Extensions
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace ProductsInventory.API.Application.Extensions
 {
     public static class IdentityExtensions
     {
@@ -63,19 +66,32 @@
                 RequestServices = new ServiceCollection().AddLogging().BuildServiceProvider(),
                 Response =
                 {
+
                     Body = new MemoryStream(),
                 },
             };
 
             await response.ExecuteAsync(context);
 
+            context.Response.Body.Position = 0;
+
             return context;
         }
 
-        public static async Task<T> GetObjectFromBody<T>(this HttpContext context)
+        public static async Task<T> GetObjectFromBody<T>(this HttpContext context, string selectJson = null)
         {
-            return await JsonSerializer.DeserializeAsync<T>(context.Response.Body, 
-                                                                      new JsonSerializerOptions(JsonSerializerDefaults.Web));
+            using var bodyReader = new StreamReader(context.Response.Body);
+
+            string body = await bodyReader.ReadToEndAsync();
+
+            if(selectJson is null)
+                return JsonConvert.DeserializeObject<T>(body);
+
+            var response = JsonConvert.DeserializeObject(body) as JObject;
+
+            var property = JObject.Parse(body)[selectJson];
+
+            return (T)property.ToObject(typeof(T));
         }
 
         public static AccessTokenResponse GenerateToken(this IdentityUser user, ConfigurationManager configuration, ClaimsIdentity claims)

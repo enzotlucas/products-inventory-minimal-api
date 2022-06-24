@@ -1,4 +1,4 @@
-﻿namespace ProductsInventory.API.Application.Configurations
+﻿namespace ProductsInventory.API.Application.Extensions
 {
     public static class ApplicationConfigurationsExtensions
     {
