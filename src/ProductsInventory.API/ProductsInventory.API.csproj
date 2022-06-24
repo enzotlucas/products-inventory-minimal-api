@@ -13,15 +13,15 @@
 	<ItemGroup>
 		<Using Include="ProductsInventory.API.Application.Commands" />
 		<Using Include="ProductsInventory.API.Application.Configurations" />
+		<Using Include="ProductsInventory.API.Application.Contracts" />
 		<Using Include="ProductsInventory.API.Application.Endpoints" />
 		<Using Include="ProductsInventory.API.Application.Extensions" />
 		<Using Include="ProductsInventory.API.Application.Queries" />
-		<Using Include="ProductsInventory.API.Application.Contracts" />
 		<Using Include="ProductsInventory.API.Core.DomainObjects" />
 		<Using Include="ProductsInventory.API.Core.Entities" />
 		<Using Include="ProductsInventory.API.Core.Exceptions" />
 		<Using Include="ProductsInventory.API.Core.Repositories" />
-		<Using Include="ProductsInventory.API.Core.Validations" />
+		<Using Include="ProductsInventory.API.Core.Validators" />
 		<Using Include="ProductsInventory.API.Core.ValueObjects" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data.Repositories" />
