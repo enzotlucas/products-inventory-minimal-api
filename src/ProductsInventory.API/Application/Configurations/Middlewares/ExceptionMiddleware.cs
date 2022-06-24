@@ -28,7 +28,7 @@ namespace ProductsInventory.API.Application.Configurations.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error ocurred, exception: ", ex);
+                _logger.LogError($"An error ocurred, exception: {ex}", ex);
 
                 await HandleExceptionAsync(httpContext, ex).ConfigureAwait(false);
             }

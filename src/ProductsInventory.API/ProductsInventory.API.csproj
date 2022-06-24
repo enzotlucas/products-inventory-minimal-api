@@ -21,6 +21,7 @@
 		<Using Include="ProductsInventory.API.Core.Entities" />
 		<Using Include="ProductsInventory.API.Core.Exceptions" />
 		<Using Include="ProductsInventory.API.Core.Repositories" />
+		<Using Include="ProductsInventory.API.Core.Validations" />
 		<Using Include="ProductsInventory.API.Core.ValueObjects" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data" />
 		<Using Include="ProductsInventory.API.Infrastructure.Data.Repositories" />
@@ -28,6 +29,7 @@
 
 		<Using Include="AutoMapper" />
 		<Using Include="Dapper" />
+		<Using Include="FluentValidation" />
 		<Using Include="HealthChecks.UI.Client" />
 		<Using Include="Microsoft.AspNetCore.Authorization" />
 		<Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />

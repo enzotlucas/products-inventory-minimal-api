@@ -1,6 +1,4 @@
-﻿using ProductsInventory.API.Core.Validations;
-
-namespace ProductsInventory.API.Core.Entities
+﻿namespace ProductsInventory.API.Core.Entities
 {
     public class Product
     {
@@ -20,7 +18,7 @@ namespace ProductsInventory.API.Core.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
-        public Product(string name, int quantity, double price, double cost, bool enabled)
+        public Product(string name, int quantity, double price, double cost, bool enabled, IValidator<Product> validator)
         {
             Name = name;
             Quantity = quantity;
@@ -28,7 +26,7 @@ namespace ProductsInventory.API.Core.Entities
             Cost = cost;
             Enabled = enabled;
 
-            Validate();
+            Validate(validator);
         }
 
         protected Product() { }
@@ -41,14 +39,14 @@ namespace ProductsInventory.API.Core.Entities
             Id = Guid.Empty;
         }
 
-        private void Validate()
+        private void Validate(IValidator<Product> validator)
         {
-            var validator = new ProductValidator().Validate(this);
+            var validationResult = validator.Validate(this);
 
-            if (validator.IsValid)
+            if (validationResult.IsValid)
                 return;
 
-            throw new InvalidProductException(validator.ToDictionary());
+            throw new InvalidProductException(validationResult.ToDictionary());
         }
 
         public void Enable()

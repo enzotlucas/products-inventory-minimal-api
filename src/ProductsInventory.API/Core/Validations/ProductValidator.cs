@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ProductsInventory.API.Core.Validations
+﻿namespace ProductsInventory.API.Core.Validations
 {
     public class ProductValidator : AbstractValidator<Product>
     {
