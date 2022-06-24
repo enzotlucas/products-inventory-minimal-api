@@ -2,7 +2,7 @@
 ```
 <under development>
 ```
-A CRUD API using Minimal API
+A showcase of a simple CRUD Minimal API project
 
 ## Preparing the environment:
 
@@ -151,23 +151,7 @@ namespace ProductsInventory.API.Application.Configurations
 
 ## Diferent endpoints mappings
 
-In this project, i'm using 3 ways of endpoint mapping.
-
-### **- The "normal" way**:
-```cs
-public void DefineActions(WebApplication app)
-{
-    app.Map("/error", (HttpContext http) =>
-    {
-        var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
-        if (error is null)
-            return Results.Problem("An error ocurred", statusCode: 500);
-        if (error is BusinessException)
-            return Results.BadRequest(error.Message);
-        return Results.Problem($"An error ocurred, message: {error.InnerException?.Message ?? error.Message}", statusCode: 500);
-    });
-}
-```
+In this project, i'm using 2 ways of endpoint mapping.
 
 ### **- With a internal method delegate**:
 ```cs
@@ -233,17 +217,17 @@ namespace ProductsInventory.API.Application.Commands
 }
 ```
 
-## Security
-```
-<under development>
-```
-
 ## Logging
 ```
 <under development>
 ```
 
 ## Healthchecks
+```
+<under development>
+```
+
+## Security
 ```
 <under development>
 ```
