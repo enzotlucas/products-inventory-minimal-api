@@ -5,6 +5,8 @@
         public EntityToResponse()
         {
             CreateMap<Product, ProductResponse>();
+
+            CreateMap<IdentityUser, UserResponse>();
         }
     }
 }

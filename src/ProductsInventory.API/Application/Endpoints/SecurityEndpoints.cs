@@ -17,6 +17,11 @@ namespace ProductsInventory.API.Application.Endpoints
                .ProducesValidationProblem()
                .Produces<AccessTokenResponse>(StatusCodes.Status200OK)
                .Produces(StatusCodes.Status400BadRequest);
+
+            app.MapGet("/api/account/users", GetUsersAsync)
+               .WithTags("Account")
+               .ProducesValidationProblem()
+               .Produces<IEnumerable<UserResponse>>(StatusCodes.Status200OK);
         }
 
         [AllowAnonymous]
@@ -74,6 +79,22 @@ namespace ProductsInventory.API.Application.Endpoints
             var response = user.GenerateToken(_configuration, new ClaimsIdentity(claims));
 
             return logger.OkWithLog($"Login success, userId: {user.Id}", response);
+        }
+
+        [Authorize]
+        [ClaimsAuthorize("UserType","ADMINISTRATOR")]
+        internal async Task<IResult> GetUsersAsync(ILogger<SecurityEndpoints> logger,
+                                                   HttpContext context,
+                                                   UserManager<IdentityUser> userManager,
+                                                   IMapper mapper)
+        {
+            var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            logger.LogInformation($"User {userId} are consulting all users");
+
+            var users = await userManager.Users.ToListAsync();
+
+            return logger.OkWithLog($"User {userId} consulted all users", mapper.Map<IEnumerable<UserResponse>>(users));
         }
 
         private static long ToUnixEpochDate(DateTime date)

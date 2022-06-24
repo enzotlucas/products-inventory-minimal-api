@@ -1,6 +1,4 @@
-﻿using ProductsInventory.API.Core.Validations;
-
-namespace ProductsInventory.API.Application.Mappings
+﻿namespace ProductsInventory.API.Application.Mappings
 {
     public class RequestToEntity : Profile
     {
