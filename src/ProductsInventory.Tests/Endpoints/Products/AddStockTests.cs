@@ -2,7 +2,7 @@
 {
     public class AddStockTests
     {
-        [Trait("Products", "AddStock")]
+        [Trait("AddStock", "Products")]
         [Fact(DisplayName = "Add stock to a valid product")]
         public async Task AddStock_ValidProduct_ShouldAddTheCorrectQuantity()
         {
@@ -25,7 +25,27 @@
             response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
-        [Trait("Products", "AddStock")]
+        [Trait("AddStock", "Products")]
+        [Fact(DisplayName = "Add invalid stock quantity to a valid product")]
+        public async Task WithdrawFromStock_ValidProduct_ShouldReturnErrorBecauseQuantityCantBeLowerThanZero()
+        {
+            //Arrange
+            var repository = Substitute.For<IProductsRepository>();
+            var context = HttpContextMock.GenerateAuthenticateduserHttpContext(UserType.ADMINISTRATOR);
+            var logger = Substitute.For<ILogger<AddStock>>();
+            var product = ProductsMock.GenerateValidProduct();
+            var id = product.Id;
+            var quantity = -1 ;
+            repository.GetByIdAsync(id).Returns(product);
+
+            //Act
+            var action = async () => await AddStock.Action(repository, context, logger, id, quantity);
+
+            //Assert
+            await action.Should().ThrowAsync<InvalidQuantityException>();
+        }
+
+        [Trait("AddStock", "Products")]
         [Fact(DisplayName = "Add stock to a invalid product")]
         public async Task AddStock_InvalidProduct_ShouldReturnNotFound()
         {
