@@ -6,8 +6,7 @@
         public static string[] Methods => new string[] { HttpMethod.Delete.ToString() };
         public static Delegate Handle => Action;
 
-        [Authorize]
-        [ClaimsAuthorize("Products", "Delete")]
+        [Authorize(Policy = "CanDeleteProduct")]
         public static async Task<IResult> Action(HttpContext context, 
                                                  IProductsRepository repository, 
                                                  ILogger<DeleteProcuctById> logger, 

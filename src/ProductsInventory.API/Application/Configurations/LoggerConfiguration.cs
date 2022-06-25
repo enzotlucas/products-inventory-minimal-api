@@ -2,7 +2,7 @@
 {
     public class LoggerConfiguration : IDefinition
     {
-        public int OrderPriority => 1;
+        public int ConfigurationOrder => 1;
 
         public void DefineActions(WebApplication app)
         {

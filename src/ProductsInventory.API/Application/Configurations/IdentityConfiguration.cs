@@ -2,7 +2,7 @@
 {
     public class IdentityConfiguration : IDefinition
     {
-        public int OrderPriority => 2;
+        public int ConfigurationOrder => 2;
 
         public void DefineActions(WebApplication app)
         {
@@ -28,7 +28,10 @@
             ).AddEntityFrameworkStores<IdentityContext>()
              .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicys();
+            });
 
             builder.Services.AddAuthentication(x =>
             {

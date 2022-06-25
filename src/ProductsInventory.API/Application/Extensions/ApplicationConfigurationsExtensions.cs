@@ -9,7 +9,7 @@
             foreach (var scanMarker in scanMarkers)
                 configurations.AddRange(scanMarker.Assembly.ExportedTypes
                                                     .Where(e => typeof(IDefinition).IsAssignableFrom(e) && e.BaseType is not null)
-                                                    .Select(Activator.CreateInstance).Cast<IDefinition>().OrderBy(c => c.OrderPriority));
+                                                    .Select(Activator.CreateInstance).Cast<IDefinition>().OrderBy(c => c.ConfigurationOrder));
 
             foreach (var configuration in configurations)
                 configuration.DefineServices(builder);

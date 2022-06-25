@@ -4,7 +4,7 @@ namespace ProductsInventory.API.Application.Endpoints
     {
         private ConfigurationManager _configuration;
 
-        public int OrderPriority => 4;
+        public int ConfigurationOrder => 4;
 
         public void DefineActions(WebApplication app)
         {
@@ -83,8 +83,7 @@ namespace ProductsInventory.API.Application.Endpoints
             return logger.OkWithLog($"Login success, userId: {user.Id}", response);
         }
 
-        [Authorize]
-        [ClaimsAuthorize("UserType","ADMINISTRATOR")]
+        [Authorize(Policy = "IsAdmin")]
         internal async Task<IResult> GetUsersAsync(ILogger<SecurityEndpoints> logger,
                                                    HttpContext context,
                                                    UserManager<IdentityUser> userManager,

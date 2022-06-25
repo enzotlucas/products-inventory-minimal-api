@@ -6,8 +6,7 @@
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 
-        [Authorize]
-        [ClaimsAuthorize("Products", "Read")]
+        [Authorize(Policy = "CanReadProduct")]
         public static async Task<IResult> Action(IProductsRepository repository, 
                                                  HttpContext context, 
                                                  ILogger<GetAllProducts> logger, 

@@ -2,7 +2,7 @@
 {
     public class InventoryEndpoints : IDefinition
     {
-        public int OrderPriority => 5;
+        public int ConfigurationOrder => 5;
 
         public void DefineActions(WebApplication app)
         {

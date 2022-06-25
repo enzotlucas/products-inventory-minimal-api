@@ -115,5 +115,25 @@ namespace ProductsInventory.API.Application.Extensions
 
             return new AccessTokenResponse("Bearer", tokenHandler.WriteToken(token), tokenDescriptor.Expires.Value, user.Id);
         }
+
+        public static AuthorizationOptions AddPolicys(this AuthorizationOptions options)
+        {
+            options.AddPolicy("CanReadProduct", p =>
+                        p.RequireAuthenticatedUser().RequireClaim("Products", "Read"));
+
+            options.AddPolicy("CanCreateProduct", p =>
+                    p.RequireAuthenticatedUser().RequireClaim("Products", "Create"));
+
+            options.AddPolicy("CanUpdateProduct", p =>
+                    p.RequireAuthenticatedUser().RequireClaim("Products", "Update"));
+
+            options.AddPolicy("CanDeleteProduct", p =>
+                    p.RequireAuthenticatedUser().RequireClaim("Products", "Delete")); 
+            
+            options.AddPolicy("IsAdmin", p =>
+                    p.RequireAuthenticatedUser().RequireClaim("UserType", "ADMINISTRATOR"));
+
+            return options;
+        }
     }
 }

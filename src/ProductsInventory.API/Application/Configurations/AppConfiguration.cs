@@ -4,7 +4,7 @@ namespace ProductsInventory.API.Application.Configurations
 {
     public class AppConfiguration : IDefinition
     {
-        public int OrderPriority => 0;
+        public int ConfigurationOrder => 0;
 
         [AllowAnonymous]
         public void DefineActions(WebApplication app)
