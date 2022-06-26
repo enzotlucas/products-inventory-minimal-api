@@ -16,8 +16,6 @@
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            logger.LogInformation($"User {userId} requested {Route},page number: {page} and ammount of rows: {rows}");
-
             var products = await repository.GetAllAsync(page, rows);
 
             return logger.OkWithLog($"Get products was requested by {userId}, results count: {products.Count()}", 

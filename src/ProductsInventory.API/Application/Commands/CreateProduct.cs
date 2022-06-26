@@ -16,8 +16,6 @@
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            logger.LogInformation($"User {userId} requested {Route} with payload: {dto}");
-
             dto.Validator = validator;
 
             var product = mapper.Map<Product>(dto);

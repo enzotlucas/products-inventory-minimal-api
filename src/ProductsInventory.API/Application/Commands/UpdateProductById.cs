@@ -14,9 +14,7 @@
                                                  ProductRequest dto)
         {
             var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-
-            logger.LogInformation($"User {userId} requested {Route} with productId: {id} and payload: {dto}");
-            
+                        
             var product = await repository.GetByIdAsync(id);
 
             if (!product.Valid()) 
