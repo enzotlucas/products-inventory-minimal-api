@@ -1,15 +1,17 @@
 # Products Inventoy Minimal API (.net 6)
-```
-<under development>
-```
 A showcase of a simple CRUD Minimal API project
 
+## The project
+The project is made as a study showcase, where i'm using diferent libraries and ways of solving problems.
+
+In the API project, i'm using .NET 6, AutoMapper, FluentValidations, Identity, Swashbuckle, EntityFrameworkCore, Dapper and Serilog.
+In the tests project, i'm using xUnit, NSubstitute and FluentAssertions.
+
 ## Preparing the environment:
+First, we need to create the database, using this commands:
 
 ```bash
 # PowerShell:
-Install-Package Microsoft.EntityFrameworkCore
-
 Add-Migration InitialDatabase -Context ProductsContext -o "Infrastructure/Data/Migrations"
 Add-Migration InitialIdentity -Context IdentityContext -o "Infrastructure/Identity/Migrations"
 
@@ -20,7 +22,7 @@ Update-Database -Context IdentityContext
 ## Dependency injection
 
 The project have an interface called IDefinition, where every class that is derived from it is mapping endpoints or services for the app.
-Those endpoints and services are captured by ApplicationConfigurationsExtensions.cs using the assembly, then mapped for the application.
+Those endpoints and services are captured by ApplicationConfigurationsExtensions.cs using the assembly, then mapped for the application in the defined order (because of the middlewares, we need to define the order).
 The class ApplicationConfigurationsExtensions.cs provides the methods that are used in the Program.cs, as the examples shows:
 
 **ApplicationConfigurationsExtensions.cs**:
@@ -36,7 +38,7 @@ namespace ProductsInventory.API.Application.Configurations
             foreach (var scanMarker in scanMarkers)
                 configurations.AddRange(scanMarker.Assembly.ExportedTypes
                                                     .Where(e => typeof(IDefinition).IsAssignableFrom(e) && e.BaseType is not null)
-                                                    .Select(Activator.CreateInstance).Cast<IDefinition>());
+                                                    .Select(Activator.CreateInstance).Cast<IDefinition>().OrderBy(c => c.ConfigurationOrder));
 
             foreach (var configuration in configurations)
                 configuration.DefineServices(builder);
@@ -71,13 +73,14 @@ app.UseApplicationConfigurations();
 app.Run();
 ```
 
-The interface basically defines two methods:
+The interface basically defines two methods and the ConfigurationOrder property:
 
 ```cs
 namespace ProductsInventory.API.Core.DomainObjects
 {
     public interface IDefinition
     {
+        int ConfigurationOrder { get; }
         void DefineActions(WebApplication app);
         void DefineServices(WebApplicationBuilder builder);
     }
@@ -132,6 +135,8 @@ namespace ProductsInventory.API.Application.Configurations
 {
     public class SwaggerConfiguration : IDefinition
     {
+        public int ConfigurationOrder => 3;
+
         public void DefineActions(WebApplication app)
         {
             app.UseSwagger();
@@ -148,6 +153,7 @@ namespace ProductsInventory.API.Application.Configurations
     }
 }
 ```
+The order here is important for the middlewares, like the logging middleware, it haves to be one of the first.
 
 ## Diferent endpoints mappings
 
@@ -218,8 +224,84 @@ namespace ProductsInventory.API.Application.Commands
 ```
 
 ## Logging
+The application logs are made using Segilog and saving in the database (table name is LogAPI). The configuration file is in **LoggerConfiguration.cs**.<br>
+The app have a LoggingMiddleware to log every request but from healthchecks.
+
+**LoggerConfiguration.cs**
+```cs
+public class LoggerConfiguration : IDefinition
+{
+    public int ConfigurationOrder => 1;
+
+    public void DefineActions(WebApplication app)
+    {
+        app.UseLoggingMiddleware();
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        app.MapHealthChecksUI(options => { options.UIPath = "/health-ui"; });
+    }
+
+    public void DefineServices(WebApplicationBuilder builder)
+    {
+        builder.Services.AddHealthChecks()
+                        .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+        builder.Host.UseSerilog((context, configuration) =>
+        {
+            configuration
+            .WriteTo.Console()
+            .WriteTo.MSSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                    sinkOptions: new MSSqlServerSinkOptions()
+                    {
+                        AutoCreateSqlTable = true,
+                        TableName = "LogAPI"
+                    });
+        });
+    }
+}
 ```
-<under development>
+
+**LoggerMiddleware.cs**
+```cs
+public class LoggerMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<LoggerMiddleware> _logger;
+
+    public LoggerMiddleware(RequestDelegate next, ILogger<LoggerMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        await HandleLogsAsync(context);
+
+        await _next(context);
+    }
+
+    private Task HandleLogsAsync(HttpContext context)
+    {
+        if (context.Request.Path.Equals("/health"))
+            return Task.CompletedTask;
+
+        if (context.User is null || !context.User.Identity.IsAuthenticated)
+        {
+            _logger.LogInformation($"Request to route {context.Request.Path} at: {DateTime.Now}.");
+            return Task.CompletedTask;
+        }
+
+        var userId = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        _logger.LogInformation($"User {userId} requested {context.Request.Path} at: {DateTime.Now}.");
+        
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ## Healthchecks
