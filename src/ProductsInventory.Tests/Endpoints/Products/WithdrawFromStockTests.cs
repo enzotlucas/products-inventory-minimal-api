@@ -87,8 +87,8 @@
         }
 
         [Trait("WithdrawFromStock", "Products")]
-        [Fact(DisplayName = "Withdraw from stock of a invalid product")]
-        public async Task WithdrawFromStock_InvalidProduct_ShouldReturnNotFound()
+        [Fact(DisplayName = "Withdraw from stock of a unexistent product")]
+        public async Task WithdrawFromStock_UnexistentProduct_ShouldReturnNotFound()
         {
             //Arrange
             var repository = Substitute.For<IProductsRepository>();
@@ -107,6 +107,29 @@
 
             //Assert
             response.GetResposeValue().Result.Response.StatusCode.Should().Be(result.GetResposeValue().Result.Response.StatusCode);
+        }
+
+        [Trait("WithdrawFromStock", "Products")]
+        [Fact(DisplayName = "Try withdraw from stock with service unavailable")]
+        public async Task AddStock_ServiceUnavailable_ShouldReturnError()
+        {
+            //Arrange
+            var repository = Substitute.For<IProductsRepository>();
+            var context = HttpContextMock.GenerateAuthenticateduserHttpContext(UserType.ADMINISTRATOR);
+            var logger = Substitute.For<ILogger<WithdrawFromStock>>();
+            var product = ProductsMock.GenerateValidProduct();
+            var id = product.Id;
+            var quantity = 2;
+            repository.GetByIdAsync(id).Returns(product);
+            var initialQuantity = product.Quantity;
+            repository.UnitOfWork.Commit().Returns(false);
+
+            //Act
+            var response = await WithdrawFromStock.Action(repository, context, logger, id, quantity);
+
+            //Assert
+            product.Quantity.Should().Be(initialQuantity - quantity);
+            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

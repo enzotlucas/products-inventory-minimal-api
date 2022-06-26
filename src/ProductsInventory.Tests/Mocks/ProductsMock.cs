@@ -1,4 +1,6 @@
-﻿namespace ProductsInventory.Tests.Mocks
+﻿using ProductsInventory.API.Application.Contracts;
+
+namespace ProductsInventory.Tests.Mocks
 {
     public static class ProductsMock
     {
@@ -24,6 +26,30 @@
         public static Product GenerateNotExistingProduct()
         {
             return new Product(false);
+        }
+
+        public static ProductRequest GenerateValidProductRequest()
+        {
+            return new ProductRequest
+            {
+                Name = "Product Name",
+                Quantity = 5,
+                Cost = .8,
+                Price = 0.2,
+                Enabled = true
+            };
+        }
+
+        public static ProductRequest GenerateInvalidProductRequest()
+        {
+            return new ProductRequest
+            {
+                Name = "",
+                Quantity = 0,
+                Cost = 0.8,
+                Price = 1,
+                Enabled = true
+            };
         }
     }
 }

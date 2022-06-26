@@ -67,5 +67,28 @@
             //Assert
             response.GetResposeValue().Result.Response.StatusCode.Should().Be(result.GetResposeValue().Result.Response.StatusCode);
         }
+
+        [Trait("AddStock", "Products")]
+        [Fact(DisplayName = "Try add stock with service unavailable")]
+        public async Task AddStock_ServiceUnavailable_ShouldReturnError()
+        {
+            //Arrange
+            var repository = Substitute.For<IProductsRepository>();
+            var context = HttpContextMock.GenerateAuthenticateduserHttpContext(UserType.ADMINISTRATOR);
+            var logger = Substitute.For<ILogger<AddStock>>();
+            var product = ProductsMock.GenerateValidProduct();
+            var id = product.Id;
+            var quantity = 5;
+            repository.GetByIdAsync(id).Returns(product);
+            var initialQuantity = product.Quantity;
+            repository.UnitOfWork.Commit().Returns(false);
+
+            //Act
+            var response = await AddStock.Action(repository, context, logger, id, quantity);
+
+            //Assert
+            product.Quantity.Should().Be(quantity + initialQuantity);
+            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+        }
     }
 }
