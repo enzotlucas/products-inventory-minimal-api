@@ -224,8 +224,8 @@ namespace ProductsInventory.API.Application.Commands
 ```
 
 ## Logging
-The application logs are made using Segilog and saving in the database (table name is LogAPI). The configuration file is in **LoggerConfiguration.cs**.<br>
-The app have a LoggingMiddleware to log every request but from healthchecks.
+The application logs are made using Segilog and saving in the database (table name is LogAPI). The configuration is in **LoggerConfiguration.cs**.<br>
+The app have a LoggingMiddleware to log every request there are not from healthchecks.
 
 **LoggerConfiguration.cs**
 ```cs
