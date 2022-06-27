@@ -21,6 +21,7 @@
             var response = await CreateProduct.Action(context, repository, logger, mapper, validator, productDto);
 
             //Assert
+            response.Should().NotBeNull();
             response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
@@ -63,6 +64,7 @@
             var response = await CreateProduct.Action(context, repository, logger, mapper, validator, productDto);
 
             //Assert
+            response.Should().NotBeNull();
             response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }

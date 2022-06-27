@@ -22,6 +22,7 @@
 
             //Assert
             product.Quantity.Should().Be(initialQuantity - quantity);
+            response.Should().NotBeNull();
             response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
@@ -106,6 +107,7 @@
             var response = await WithdrawFromStock.Action(repository, context, logger, id, quantity);
 
             //Assert
+            response.Should().NotBeNull();
             response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be(result.GetResposeValueAsync().Result.Response.StatusCode);
         }
 
@@ -129,6 +131,7 @@
 
             //Assert
             product.Quantity.Should().Be(initialQuantity - quantity);
+            response.Should().NotBeNull();
             response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
