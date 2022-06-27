@@ -313,3 +313,13 @@ public class LoggerMiddleware
 ```
 <under development>
 ```
+
+## Docker
+```
+<under development>
+```
+
+## Tests
+```
+<under development>
+```
