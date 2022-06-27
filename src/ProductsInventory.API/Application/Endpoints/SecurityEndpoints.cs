@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace ProductsInventory.API.Application.Endpoints
 {
     public class SecurityEndpoints : IDefinition

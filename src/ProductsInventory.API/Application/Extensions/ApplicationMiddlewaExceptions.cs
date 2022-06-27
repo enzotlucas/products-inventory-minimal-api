@@ -1,6 +1,4 @@
-﻿using ProductsInventory.API.Application.Configurations.Middlewares;
-
-namespace ProductsInventory.API.Application.Extensions
+﻿namespace ProductsInventory.API.Application.Extensions
 {
     public static class ApplicationMiddlewaExceptions
     {

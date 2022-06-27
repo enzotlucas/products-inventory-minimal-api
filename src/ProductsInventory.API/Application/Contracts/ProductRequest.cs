@@ -8,7 +8,7 @@
         public double? Cost { get; set; }
         public bool? Enabled { get; set; }
 
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public IValidator<Product> Validator { get; set; }
 
         public override string ToString()

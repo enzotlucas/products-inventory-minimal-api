@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<Using Include="ProductsInventory.API.Application.Commands" />
 		<Using Include="ProductsInventory.API.Application.Configurations" />
+		<Using Include="ProductsInventory.API.Application.Configurations.Middlewares" />
 		<Using Include="ProductsInventory.API.Application.Contracts" />
 		<Using Include="ProductsInventory.API.Application.Endpoints" />
 		<Using Include="ProductsInventory.API.Application.Extensions" />
@@ -45,10 +46,13 @@
 		<Using Include="Microsoft.IdentityModel.Tokens" />
 		<Using Include="Microsoft.OpenApi.Any" />
 		<Using Include="Microsoft.OpenApi.Models" />
+		<Using Include="Newtonsoft.Json" />
+		<Using Include="Newtonsoft.Json.Linq" />
 		<Using Include="Serilog" />
 		<Using Include="Serilog.Sinks.MSSqlServer" />
 		<Using Include="Swashbuckle.AspNetCore.SwaggerGen" />
 		<Using Include="System.IdentityModel.Tokens.Jwt" />
+		<Using Include="System.Net" />
 		<Using Include="System.Runtime.Serialization" />
 		<Using Include="System.Security.Claims" />
 		<Using Include="System.Text" />

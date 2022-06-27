@@ -1,7 +1,4 @@
-﻿using ProductsInventory.API.Application.Contracts;
-using ProductsInventory.API.Application.Extensions;
-
-namespace ProductsInventory.Tests.Endpoints.Products
+﻿namespace ProductsInventory.Tests.Endpoints.Products
 {
     public class GetAllProductsTests
     {

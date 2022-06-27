@@ -1,7 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-
-namespace ProductsInventory.API.Infrastructure.Data.Repositories
+﻿namespace ProductsInventory.API.Infrastructure.Data.Repositories
 {
     public class ProductsRepository : IProductsRepository
     {

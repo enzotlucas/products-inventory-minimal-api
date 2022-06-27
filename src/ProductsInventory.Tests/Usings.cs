@@ -6,6 +6,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Logging;
 global using NSubstitute;
 global using ProductsInventory.API.Application.Commands;
+global using ProductsInventory.API.Application.Contracts;
 global using ProductsInventory.API.Application.Extensions;
 global using ProductsInventory.API.Application.Queries;
 global using ProductsInventory.API.Core.Entities;

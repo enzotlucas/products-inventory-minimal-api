@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Net;
-
-namespace ProductsInventory.API.Application.Configurations.Middlewares
+﻿namespace ProductsInventory.API.Application.Configurations.Middlewares
 {
     public class ExceptionMiddleware
     {

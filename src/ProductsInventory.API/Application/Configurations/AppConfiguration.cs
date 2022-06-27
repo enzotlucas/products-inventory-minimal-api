@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ProductsInventory.API.Application.Configurations
+﻿namespace ProductsInventory.API.Application.Configurations
 {
     public class AppConfiguration : IDefinition
     {

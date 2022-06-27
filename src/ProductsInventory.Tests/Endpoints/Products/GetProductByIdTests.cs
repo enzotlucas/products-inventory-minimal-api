@@ -1,6 +1,4 @@
-﻿using ProductsInventory.API.Application.Contracts;
-
-namespace ProductsInventory.Tests.Endpoints.Products
+﻿namespace ProductsInventory.Tests.Endpoints.Products
 {
     public class GetProductByIdTests
     {
