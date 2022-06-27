@@ -7,7 +7,8 @@
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "CanReadProduct")]
-        public static async Task<IResult> Action(HttpContext context, IProductsRepository repository, 
+        public static async Task<IResult> Action(HttpContext context, 
+                                                 IProductsRepository repository, 
                                                  ILogger<GetProductById> logger, 
                                                  IMapper mapper,
                                                  Guid id)

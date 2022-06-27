@@ -52,7 +52,7 @@ namespace ProductsInventory.Tests.Mocks
             };
         }
 
-        public static ProductResponse GenerateValidProductResponse(string name)
+        public static ProductResponse GenerateValidProductResponse(string name = null)
         {
             return new ProductResponse
             {
