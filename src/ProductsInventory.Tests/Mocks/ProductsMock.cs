@@ -34,20 +34,28 @@ namespace ProductsInventory.Tests.Mocks
             {
                 Name = "Product Name",
                 Quantity = 5,
-                Cost = .8,
-                Price = 0.2,
+                Cost = .2,
+                Price = 0.8,
                 Enabled = true
             };
         }
 
-        public static ProductRequest GenerateInvalidProductRequest()
+        public static ProductRequest GenerateInvalidProductRequest(bool invalidName = false,
+                                                                   bool invalidQuantity = false,
+                                                                   bool invalidCost = false,
+                                                                   bool invalidPrice = false)
         {
+            var name = invalidName ? string.Empty : "Product name";
+            var quantity = invalidQuantity ? -1 : 0;
+            var cost = invalidCost ? -1 : 0.5;
+            var price = invalidPrice ? cost - 1 : 1;
+
             return new ProductRequest
             {
-                Name = "",
-                Quantity = 0,
-                Cost = 0.8,
-                Price = 1,
+                Name = name,
+                Quantity = quantity,
+                Cost = cost,
+                Price = price,
                 Enabled = true
             };
         }

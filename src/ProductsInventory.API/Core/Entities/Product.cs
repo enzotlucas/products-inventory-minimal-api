@@ -86,8 +86,11 @@
 
         private void UpdateName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name) || name.Equals(Name))
+            if (name is null || name.Equals(Name))
                 return;
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new InvalidNameException();
 
             Name = name;
         }
