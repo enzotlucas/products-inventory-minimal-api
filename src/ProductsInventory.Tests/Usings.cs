@@ -1,3 +1,4 @@
+global using AutoMapper;
 global using FluentAssertions;
 global using FluentValidation;
 global using FluentValidation.Results;
@@ -6,6 +7,7 @@ global using Microsoft.Extensions.Logging;
 global using NSubstitute;
 global using ProductsInventory.API.Application.Commands;
 global using ProductsInventory.API.Application.Extensions;
+global using ProductsInventory.API.Application.Queries;
 global using ProductsInventory.API.Core.Entities;
 global using ProductsInventory.API.Core.Exceptions;
 global using ProductsInventory.API.Core.Repositories;

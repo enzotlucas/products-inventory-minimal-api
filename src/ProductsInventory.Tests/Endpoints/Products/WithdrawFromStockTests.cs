@@ -22,7 +22,7 @@
 
             //Assert
             product.Quantity.Should().Be(initialQuantity - quantity);
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Trait("WithdrawFromStock", "Products")]
@@ -106,7 +106,7 @@
             var response = await WithdrawFromStock.Action(repository, context, logger, id, quantity);
 
             //Assert
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be(result.GetResposeValue().Result.Response.StatusCode);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be(result.GetResposeValueAsync().Result.Response.StatusCode);
         }
 
         [Trait("WithdrawFromStock", "Products")]
@@ -129,7 +129,7 @@
 
             //Assert
             product.Quantity.Should().Be(initialQuantity - quantity);
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

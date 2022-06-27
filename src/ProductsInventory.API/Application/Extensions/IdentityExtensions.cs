@@ -59,7 +59,7 @@ namespace ProductsInventory.API.Application.Extensions
             return claimList;
         }
 
-        public static async Task<HttpContext> GetResposeValue(this IResult response)
+        public static async Task<HttpContext> GetResposeValueAsync(this IResult response)
         {
             var context = new DefaultHttpContext
             {
@@ -78,7 +78,7 @@ namespace ProductsInventory.API.Application.Extensions
             return context;
         }
 
-        public static async Task<T> GetObjectFromBody<T>(this HttpContext context, string selectJson = null)
+        public static async Task<T> GetObjectFromBodyAsync<T>(this HttpContext context, string selectJson = null)
         {
             using var bodyReader = new StreamReader(context.Response.Body);
 

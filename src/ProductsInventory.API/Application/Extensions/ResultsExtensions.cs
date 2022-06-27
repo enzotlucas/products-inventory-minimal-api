@@ -23,7 +23,7 @@ namespace ProductsInventory.API.Application.Extensions
             if (dto is null)
                 return logger.BadRequestWithLog("Invalid credentials");
 
-            var error = context.GetObjectFromBody<IDictionary<string, string[]>>("errors").Result;
+            var error = context.GetObjectFromBodyAsync<IDictionary<string, string[]>>("errors").Result;
 
             return logger.ValidationProblemsWithLog($"Validations error ocurred, user: {dto.Email}, error: {error}", error);
         }

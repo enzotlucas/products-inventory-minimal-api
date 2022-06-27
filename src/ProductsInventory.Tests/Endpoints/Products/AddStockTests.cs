@@ -22,7 +22,7 @@
 
             //Assert
             product.Quantity.Should().Be(quantity + initialQuantity);
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Trait("AddStock", "Products")]
@@ -65,7 +65,7 @@
             var response = await AddStock.Action(repository, context, logger, id, quantity);
 
             //Assert
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be(result.GetResposeValue().Result.Response.StatusCode);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be(result.GetResposeValueAsync().Result.Response.StatusCode);
         }
 
         [Trait("AddStock", "Products")]
@@ -88,7 +88,7 @@
 
             //Assert
             product.Quantity.Should().Be(quantity + initialQuantity);
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

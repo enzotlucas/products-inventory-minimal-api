@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace ProductsInventory.API.Application.Endpoints
 {
     public class SecurityEndpoints : IDefinition
@@ -32,12 +34,12 @@ namespace ProductsInventory.API.Application.Endpoints
                                                         UserManager<IdentityUser> userManager, 
                                                         CreateAccountRequest dto)
         {
-            var userCreated = await userManager.CreateUserAsync(dto).Result.GetResposeValue();
+            var userCreated = await userManager.CreateUserAsync(dto).Result.GetResposeValueAsync();
 
-            if (userCreated is not null && userCreated.Response.StatusCode is not 200)
+            if (userCreated is not null && userCreated.Response.StatusCode is not (int)HttpStatusCode.OK)
                 return logger.LogAndResponse(userCreated, dto);
 
-            var newUser = await userCreated.GetObjectFromBody<IdentityUser>();
+            var newUser = await userCreated.GetObjectFromBodyAsync<IdentityUser>();
 
             var claims = new ClaimsIdentity(new Claim[]
             {

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace ProductsInventory.Tests.Endpoints.Products
+﻿namespace ProductsInventory.Tests.Endpoints.Products
 {
     public class CreateProductTests
     {
@@ -23,7 +21,7 @@ namespace ProductsInventory.Tests.Endpoints.Products
             var response = await CreateProduct.Action(context, repository, logger, mapper, validator, productDto);
 
             //Assert
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Trait("CreateProduct", "Products")]
@@ -65,7 +63,7 @@ namespace ProductsInventory.Tests.Endpoints.Products
             var response = await CreateProduct.Action(context, repository, logger, mapper, validator, productDto);
 
             //Assert
-            response.GetResposeValue().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }
