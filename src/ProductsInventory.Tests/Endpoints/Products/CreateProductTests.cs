@@ -22,7 +22,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Trait("CreateProduct", "Products")]
@@ -65,7 +65,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

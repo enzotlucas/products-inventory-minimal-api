@@ -22,7 +22,7 @@
 
             //Act
             var response = await GetProductById.Action(context, repository, logger, mapper, id);
-            var responseHttpContext = await response.GetResposeValueAsync();
+            var responseHttpContext = await response.GetResposeHttpContextAsync();
             var responseBody = await responseHttpContext.GetObjectFromBodyAsync<ProductResponse>();
 
             //Assert
@@ -51,7 +51,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using ProductsInventory.API.Application.Contracts;
-
-namespace ProductsInventory.Tests.Mocks
+﻿namespace ProductsInventory.Tests.Mocks
 {
     public static class ProductsMock
     {

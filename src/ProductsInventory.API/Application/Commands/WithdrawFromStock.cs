@@ -7,7 +7,7 @@
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "CanUpdateProduct")]
-        public static async Task<IResult> Action(IProductsRepository repository, 
+        internal static async Task<IResult> Action(IProductsRepository repository, 
                                                  HttpContext context, 
                                                  ILogger<WithdrawFromStock> logger, 
                                                  Guid id, 

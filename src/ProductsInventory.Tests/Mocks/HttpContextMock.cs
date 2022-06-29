@@ -38,5 +38,10 @@
                 _ => throw new Exception("Only valid UserTypes"),
             };
         }
+
+        public static HttpContext GenerateDefaultHttpContext()
+        {
+            return new DefaultHttpContext();
+        }
     }
 }

@@ -23,7 +23,7 @@
             //Assert
             product.Quantity.Should().Be(quantity + initialQuantity);
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Trait("AddStock", "Products")]
@@ -67,7 +67,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be(result.GetResposeValueAsync().Result.Response.StatusCode);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be(result.GetResposeHttpContextAsync().Result.Response.StatusCode);
         }
 
         [Trait("AddStock", "Products")]
@@ -91,7 +91,7 @@
             //Assert
             product.Quantity.Should().Be(quantity + initialQuantity);
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

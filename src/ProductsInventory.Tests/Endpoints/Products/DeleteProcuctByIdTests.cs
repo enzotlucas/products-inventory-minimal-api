@@ -21,7 +21,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Trait("DeleteProcuctById", "Products")]
@@ -42,7 +42,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Trait("DeleteProcuctById", "Products")]
@@ -64,7 +64,7 @@
 
             //Assert
             response.Should().NotBeNull();
-            response.GetResposeValueAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.GetResposeHttpContextAsync().Result.Response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
         }
     }
 }

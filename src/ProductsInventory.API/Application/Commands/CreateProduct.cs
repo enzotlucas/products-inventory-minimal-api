@@ -7,7 +7,7 @@
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "CanCreateProduct")]
-        public static async Task<IResult> Action(HttpContext context, 
+        internal static async Task<IResult> Action(HttpContext context, 
                                                  IProductsRepository repository, 
                                                  ILogger<CreateProduct> logger, 
                                                  IMapper mapper,

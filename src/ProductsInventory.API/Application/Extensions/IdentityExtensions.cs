@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace ProductsInventory.API.Application.Extensions
+﻿namespace ProductsInventory.API.Application.Extensions
 {
     public static class IdentityExtensions
     {
@@ -59,7 +56,7 @@ namespace ProductsInventory.API.Application.Extensions
             return claimList;
         }
 
-        public static async Task<HttpContext> GetResposeValueAsync(this IResult response)
+        public static async Task<HttpContext> GetResposeHttpContextAsync(this IResult response)
         {
             var context = new DefaultHttpContext
             {

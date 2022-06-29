@@ -7,7 +7,7 @@
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "CanDeleteProduct")]
-        public static async Task<IResult> Action(HttpContext context, 
+        internal static async Task<IResult> Action(HttpContext context, 
                                                  IProductsRepository repository, 
                                                  ILogger<DeleteProcuctById> logger, 
                                                  Guid id)

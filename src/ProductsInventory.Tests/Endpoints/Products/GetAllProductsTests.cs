@@ -22,7 +22,7 @@
 
             //Act
             var response = await GetAllProducts.Action(repository, context, logger, mapper, page, rows);
-            var responseHttpContext = await response.GetResposeValueAsync();
+            var responseHttpContext = await response.GetResposeHttpContextAsync();
             var responseBody = await responseHttpContext.GetObjectFromBodyAsync<IEnumerable<ProductResponse>>();
 
             //Assert
@@ -52,7 +52,7 @@
 
             //Act
             var response = await GetAllProducts.Action(repository, context, logger, mapper, page, rows);
-            var responseHttpContext = await response.GetResposeValueAsync();
+            var responseHttpContext = await response.GetResposeHttpContextAsync();
             var responseBody = await responseHttpContext.GetObjectFromBodyAsync<IEnumerable<ProductResponse>>();
 
             //Assert

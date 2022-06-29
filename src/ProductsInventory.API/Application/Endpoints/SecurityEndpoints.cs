@@ -32,7 +32,7 @@ namespace ProductsInventory.API.Application.Endpoints
                                                         UserManager<IdentityUser> userManager, 
                                                         CreateAccountRequest dto)
         {
-            var userCreated = await userManager.CreateUserAsync(dto).Result.GetResposeValueAsync();
+            var userCreated = await userManager.CreateUserAsync(dto).Result.GetResposeHttpContextAsync();
 
             if (userCreated is not null && userCreated.Response.StatusCode is not (int)HttpStatusCode.OK)
                 return logger.LogAndResponse(userCreated, dto);
@@ -47,7 +47,7 @@ namespace ProductsInventory.API.Application.Endpoints
 
             claims.AddClaims(await userManager.GetClaimsAsync(newUser));
 
-            var response = newUser.GenerateToken(_configuration, claims);
+            var response = newUser.GenerateToken(_configuration, new ClaimsIdentity(claims));
 
             return logger.OkWithLog($"Create account success, userId: {newUser.Id}", response);
         }
@@ -100,7 +100,6 @@ namespace ProductsInventory.API.Application.Endpoints
 
         private static long ToUnixEpochDate(DateTime date)
            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
-
 
         public void DefineServices(WebApplicationBuilder builder)
         {
