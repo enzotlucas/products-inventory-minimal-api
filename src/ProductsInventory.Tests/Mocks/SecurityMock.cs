@@ -53,5 +53,42 @@
             builder.Configuration["Jwt:Issuer"] = "email@email.com";
             return builder;
         }
+
+        public static IEnumerable<IdentityUser> GenerateValidIdentityUsers(int quantity)
+        {
+            if (quantity < 1)
+                throw new Exception("Quantity can't be lower than 1");
+
+            var users = new List<IdentityUser>();
+
+            for (int i = 0; i < quantity; i++)
+                users.Add(GenerateValidIdentityUser($"user{i}"));
+
+            return users;
+        }
+
+        public static IdentityUser GenerateValidIdentityUser(string email)
+        {
+            return new IdentityUser
+            {
+                Email = email,
+                UserName = email
+            };
+        }
+
+        public static IEnumerable<UserResponse> GenerateValidUserResponseList(IEnumerable<IdentityUser> users)
+        {
+            var response = new List<UserResponse>();
+
+            foreach (var user in users)
+                response.Add(ConvertToUserResponse(user));
+
+            return response;
+        }
+
+        public static UserResponse ConvertToUserResponse(IdentityUser user)
+        {
+            return new UserResponse(Guid.Parse(user.Id), user.Email);
+        }
     }
 }
