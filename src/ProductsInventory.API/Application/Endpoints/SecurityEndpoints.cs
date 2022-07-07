@@ -58,7 +58,7 @@ namespace ProductsInventory.API.Application.Endpoints
                                                 LoginRequest dto)
         {
             if (dto is null)
-                return logger.BadRequestWithLog("Invalid credentials", $", username: {dto.Username}");
+                return logger.BadRequestWithLog("Invalid credentials");
 
             var user = userManager.FindByEmailAsync(dto.Username).Result;
             

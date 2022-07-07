@@ -23,28 +23,6 @@
             return new CreateAccountRequest(email, password, name, userType);
         }
 
-        public static AccessTokenResponse GenerateAccessToken()
-        {
-            var key = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(),
-                SigningCredentials =
-                    new SigningCredentials(
-                        new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
-                Audience = "audience@email.com",
-                Issuer = "issuer@email.com",
-                Expires = DateTime.UtcNow.AddSeconds(300)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return new AccessTokenResponse("Bearer", tokenHandler.WriteToken(token), tokenDescriptor.Expires.Value, Guid.Empty.ToString());
-        }
-
         public static WebApplicationBuilder GenerateValidAplicationBuilder()
         {
             var builder = WebApplication.CreateBuilder();
@@ -89,6 +67,33 @@
         public static UserResponse ConvertToUserResponse(IdentityUser user)
         {
             return new UserResponse(Guid.Parse(user.Id), user.Email);
+        }
+
+        public static IList<Claim> GenerateValidClaimsByUserTyoe(UserType userType)
+        {
+            var response = new List<Claim>
+            {
+                new Claim("Name", "User Name"),
+                new Claim("UserType", userType.ToString())
+            };
+
+            switch (userType)
+            {
+                case UserType.ADMINISTRATOR:
+                    response.Add(new Claim("Products", "Create"));
+                    response.Add(new Claim("Products", "Read"));
+                    response.Add(new Claim("Products", "Update"));
+                    response.Add(new Claim("Products", "Delete"));
+                    break;
+                case UserType.SELLER:
+                    response.Add(new Claim("Products", "Read"));
+                    response.Add(new Claim("Products", "Update"));
+                    break;
+                default:
+                    break;
+            }
+
+            return response;
         }
     }
 }
